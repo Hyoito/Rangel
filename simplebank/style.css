@@ -7,7 +7,7 @@ body{
     font-family: 'Inter', sans-serif;
 }
 
-section{
+.container{
     width: 1200px;
     margin: 0px auto    ;
 }
@@ -17,20 +17,35 @@ header{
     padding: 35px 0px ;
 }
 
-header section figure{
+header .flex{
+    align-items: center;
+}
+
+/* header section figure{
     float: left;
 }
 
 header section nav{
     float: right;
-}
+} */
 
-header section nav a{
+header nav a{
     text-decoration: none;
     color: #3734A9;
     font-size: 20px;
     margin: 0px 25px 0px 0px;
     font-weight: 700;
+}
+
+header nav a:last-child{
+    background-color: #2BF2F6;
+    padding: 15px 30px;
+    border-radius: 50px;
+}
+
+header nav a:last-child img{
+    position: relative;
+    top: 5px;
 }
 
 main{
@@ -39,28 +54,70 @@ main{
     padding: 120px 0px;
 }
 
-main section h1{
+main .flex{
+    align-items: center;
+}
+    /* main .textos{
+        display: inline-block;
+        width: 45%;
+        margin-right: 100px;
+    }
+
+    main .dashboard{
+        display: inline-block;
+        width: 45%;    
+    } */
+
+main .textos h1{
     color: #FFFFFF;
     font-size: 60px;
+    width: 85%;
 }
 
-main section p{
+main .textos p{
     color: #FFFFFF;
-    font-size: 26px;
+    font-size: 24px;
+    width: 80%;
+    margin: 20px 0px;
+    line-height: 150%;
 }
 
-main section a{
+main .textos a{
         text-transform: uppercase;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 700;
         text-decoration: none;
-        background-color: red;
+        background-color: #2BF2F6;
         margin: 0px 20px 0px 0px ; 
-        padding: 20px 40px ;
+        padding: 15px 30px ;
         border-radius: 50px;
+        display: inline-block;
+}
+
+main .textos a:last-child{
+    background-color: #3734A9;
+    color: #2BF2F6;
+    border: 3px solid #2BF2F6
 }
 
 footer{
     background-color: #2BF2F6;
     padding: 55px 0px;
+}
+
+footer a {
+    color: blue;
+    font-size: 18px;
+    margin: 0px 25px 0px 0px;
+    text-decoration: none;
+}
+
+footer .container > a{
+        font-weight: bold;
+        
+}
+
+.flex{
+    display: flex;
+    justify-content: space-between;
 }
