@@ -1,0 +1,20 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: 'Inter', sans-serif;
+}
+
+h1{
+    font-size: 60px;
+}
+
+.titulo{
+    background-color: #3734A9;;
+}
+
+.flex{
+    display: flex;
+}
