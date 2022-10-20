@@ -1,0 +1,51 @@
+CREATE TABLE cliente(
+  id_cliente INT PRIMARY KEY AUTO_INCREMENT,
+  nome varchar(100),
+  email VARCHAR(150)
+);
+
+CREATE TABLE poupanca(
+  id_poupanca INT PRIMARY KEY AUTO_INCREMENT,
+  saldo float
+);
+
+CREATE TABLE corrente(
+  id_conta INT PRIMARY KEY AUTO_INCREMENT,
+  agencia VARCHAR(10) NOT NULL,
+  numero_conta VARCHAR(15) NOT NULL,
+  senha VARCHAR(100) NOT NULL,
+  saldo float,
+  cliente INT,
+  poupanca INT,
+    CONSTRAINT fk_corrente_cliente
+    FOREIGN KEY (cliente)
+    REFERENCES cliente(id_cliente),
+  
+    CONSTRAINT fk_corrente_poupanca
+    FOREIGN KEY (poupanca)
+    REFERENCES poupanca(id_poupanca)
+); 
+
+
+CREATE TABLE PIX(
+  id_PIX INT PRIMARY KEY AUTO_INCREMENT,
+  chave_cpf VARCHAR(14),
+  chave_telefone VARCHAR(20),
+  chave_email VARCHAR(50),
+  conta INT,
+    CONSTRAINT fk_pix_corrente
+    FOREIGN KEY (conta)
+    REFERENCES corrente(id_conta)
+);
+
+INSERT INTO cliente(nome, email)
+  VALUES ("Rangel","carlosrangel@gmail.com");
+  
+INSERT INTO PIX(id_pix, chave_cpf,chave_telefone, chave_email)
+  VALUES ()
+
+INSERT INTO poupanca(id_poupanca, saldo)
+  VALUES ()
+  
+INSERT INTO corrente(id_conta, numero_conta, senha, cliente,poupanca, saldo)
+  VALUES () 
