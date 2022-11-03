@@ -1,51 +1,85 @@
-CREATE TABLE cliente(
-  id_cliente INT PRIMARY KEY AUTO_INCREMENT,
-  nome varchar(100),
-  email VARCHAR(150)
-);
+CREATE TABLE clientes ( id_clientes INT PRIMARY KEY AUTO_INCREMENT, nome_cliente VARCHAR(100), telefone_cliente VARCHAR(20) ); 
 
-CREATE TABLE poupanca(
-  id_poupanca INT PRIMARY KEY AUTO_INCREMENT,
-  saldo float
-);
+CREATE TABLE usuarios ( id_usuarios INT PRIMARY KEY AUTO_INCREMENT, username VARCHAR(100), email VARCHAR(100), senha VARCHAR(100) ); 
 
-CREATE TABLE corrente(
-  id_conta INT PRIMARY KEY AUTO_INCREMENT,
-  agencia VARCHAR(10) NOT NULL,
-  numero_conta VARCHAR(15) NOT NULL,
-  senha VARCHAR(100) NOT NULL,
-  saldo float,
-  cliente INT,
-  poupanca INT,
-    CONSTRAINT fk_corrente_cliente
-    FOREIGN KEY (cliente)
-    REFERENCES cliente(id_cliente),
+CREATE TABLE marcas ( id_marcas INT PRIMARY KEY AUTO_INCREMENT, nome_marca VARCHAR(100) ); 
+
+CREATE TABLE categorias ( id_categorias INT PRIMARY KEY AUTO_INCREMENT, nome_categoria VARCHAR(100) ); 
+
+CREATE TABLE produtos( id_produtos INT PRIMARY KEY AUTO_INCREMENT, nome_produto VARCHAR(100), qtd_produto INT, custo float, valor float, obs VARCHAR(100), categorias INT, marcas INT, CONSTRAINT fk_produtos_categorias FOREIGN KEY (categorias) REFERENCES categorias(id_categorias), CONSTRAINT fk_produtos_marcas FOREIGN KEY (marcas) REFERENCES marcas(id_marcas) ); 
+
+CREATE TABLE vendas ( id_vendas INT PRIMARY KEY AUTO_INCREMENT, qtd_produto INT, valor float, data VARCHAR(50), forma_pagamento VARCHAR(50), pagamento VARCHAR(10) , preco_custo float, clientes INT, usuarios INT, produtos INT, CONSTRAINT fk_vendas_clientes FOREIGN KEY (clientes) REFERENCES clientes(id_clientes), CONSTRAINT fk_vendas_usuarios FOREIGN KEY (usuarios) REFERENCES usuarios(id_usuarios), CONSTRAINT fk_vendas_produtos FOREIGN KEY (produtos) REFERENCES produtos(id_produtos) );
+INSERT INTO clientes(id_clientes,nome_cliente, telefone_cliente) VALUES (1, "Rangel", "(88)981234567"), (2, "Mariana", "(88)923145566"), (3, "Thiago" , "(88)998765542"), (4, "Nathanel", "(88)996274255"), (5, "Matheus", "(88)992560012"); INSERT INTO usuarios(id_usuarios, username, email, senha) VALUES (1, "rangeljavier", "carlosrangel@gmail.com", "123456" ), (2, "matheus", "matheus@gmail.com", "buba123"); INSERT INTO marcas(id_marcas, nome_marca) VALUES (1, "ZYRO"), (2, "CONSULADO"), (3, "RAMONES"), (4, "PAULISTA"), (5, "FOUR FRIENDS"); INSERT INTO categorias(id_categorias, nome_categoria) VALUES (1, "CD"), (2, "VINIL"), (3, "CAMISETA"), (4, "LIVROS"); INSERT INTO produtos(id_produtos, nome_produto, qtd_produto,custo, valor,obs, marcas, categorias) VALUES (1 , "CAMISA POISON HEART", 5, 24.99, 55.99, "MASCULINA E FEMININA",3, 3), (2, "CAMISETA THE OFFSPRING", 2, 33.5, 60, "MASCULINA E FEMININA",2,3), (3, "NO CONTROL", 10, 9.9, 14.9, "USADO", 1,1), (4, "LONDON CALLING", 5, 13.3 , 15.9, "ORIGINAL", 1,1), (5, "IOWA", 1 ,55.9 ,72.9 , "ORIGINAl", 5, 2), (6, "NA ESTRADA COM RAMONES", 3 ,33.5 , 35.9 ,"ORIGINAL", 5 , 4); INSERT INTO VENDAS (id_vendas , produtos, usuarios, clientes, qtd_produto, valor ,data, forma_pagamento, pagamento) VALUES (1, 1, 1, 2, 2, 40, "06/06/2002" , "PIX", "OK"), (2, 3, 1, 3, 1, 20, "02/03/1988" , "PIX", "OK"), (3, 1, 1, 1, 1, 30, "04/04/1999" , "PIX", "OK"), (4, 4, 1, 5, 3, 55.5, "01/10/1992", "PIX", "OK"), (5, 5, 1, 4, 5, 33.42, "05/09/2005", "PIX", "OK"), (6, 6, 1, 3, 4, 14.99, "09/09/2001", "PIX", "OK"), (7, 6, 1, 2, 2, 54.2, "07/04/1998", "PIX", "OK"), (8, 1, 1, 5, 1, 33.3, "05/05/2010", "PIX", "OK");
+
+
+
+
+
+
+
+3)
+  Select username,email from usuarios
   
-    CONSTRAINT fk_corrente_poupanca
-    FOREIGN KEY (poupanca)
-    REFERENCES poupanca(id_poupanca)
-); 
+4)
+ SELECT 
+   nome_produto,
+   custo,
+   valor,
+   nome_marca
+ FROM produtos
+ INNER JOIN 
+   marcas
+   ON produtos.marcas = marcas.id_marcas;
 
-
-CREATE TABLE PIX(
-  id_PIX INT PRIMARY KEY AUTO_INCREMENT,
-  chave_cpf VARCHAR(14),
-  chave_telefone VARCHAR(20),
-  chave_email VARCHAR(50),
-  conta INT,
-    CONSTRAINT fk_pix_corrente
-    FOREIGN KEY (conta)
-    REFERENCES corrente(id_conta)
-);
-
-INSERT INTO cliente(nome, email)
-  VALUES ("Rangel","carlosrangel@gmail.com");
+5)
+ SELECT 
+   nome_produto,
+   valor,
+   custo,
+   qtd_produto,
+   nome_categoria
+ FROM produtos
+ INNER JOIN 
+   categorias
+   ON produtos.categorias = categorias.id_categorias
+ where
+ qtd_produto < 5;
+ 
+6)
+ SELECT
+   nome_produto,
+   produtos.valor,
+   telefone_cliente,
+   nome_cliente
+ FROM vendas
+ JOIN 
+   clientes
+   ON vendas.clientes= clientes.id_clientes
+JOIN
+   produtos
+    ON vendas.produtos = produtos.id_produtos
+WHERE
+  nome_cliente= "Mariana";
+7)
+ SELECT
+   nome_produto,
+   vendas.valor,
+   username,
+   nome_cliente
+ FROM vendas
+ JOIN 
+   clientes
+   ON vendas.clientes= clientes.id_clientes
+JOIN
+   produtos
+    ON vendas.produtos = produtos.id_produtos
+JOIn
+  usuarios
+  ON vendas.usuarios = usuarios.id_usuarios;
   
-INSERT INTO PIX(id_pix, chave_cpf,chave_telefone, chave_email)
-  VALUES ()
-
-INSERT INTO poupanca(id_poupanca, saldo)
-  VALUES ()
   
-INSERT INTO corrente(id_conta, numero_conta, senha, cliente,poupanca, saldo)
-  VALUES () 
+  
+  
+  
+  
+  https://forms.office.com/pages/responsepage.aspx?id=HIFgbJ5zRECh04xWqKUMh2shy_pvBPVMgoiPl1rvIhxUMFZPVUdHNEVONVJXMjBCS1FPMkZTU0QyUy4u
